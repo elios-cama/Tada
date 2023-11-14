@@ -8,43 +8,53 @@ import '../application/api_error_handler.dart';
 import '../application/dio_provider.dart';
 import '../domain/post.dart';
 
-
 part 'posts_repository.g.dart';
 
 class PostsRepository {
   PostsRepository({required this.dio});
+
   final Dio dio;
 
   Future<List<Post>> fetchPosts({CancelToken? cancelToken}) => _run<List<Post>>(
-    request: () => dio.get(
-      'https://jsonplaceholder.typicode.com/posts',
-      cancelToken: cancelToken,
-    ),
-    parse: (data) {
-      // get the list of results
-      final posts = data as List<dynamic>;
-      // map them to a List<Album>
-      return posts.map((post) => Post.fromJson(post)).toList();
-    },
-  );
+        request: () => dio.get(
+          'https://jsonplaceholder.typicode.com/posts',
+          cancelToken: cancelToken,
+        ),
+        parse: (data) {
+          // get the list of results
+          final posts = data as List<dynamic>;
+          // map them to a List<Album>
+          return posts.map((post) => Post.fromJson(post)).toList();
+        },
+      );
 
   Future<Post> fetchPost(int postId, {CancelToken? cancelToken}) => _run<Post>(
-    request: () => dio.get(
-      'https://jsonplaceholder.typicode.com/posts/$postId',
-      cancelToken: cancelToken,
-    ),
-    parse: (data) => Post.fromJson(data),
-  );
+        request: () => dio.get(
+          'https://jsonplaceholder.typicode.com/posts/$postId',
+          cancelToken: cancelToken,
+        ),
+        parse: (data) => Post.fromJson(data),
+      );
 
   // Note: this method submits the data, but the backend won't actually update it
   Future<void> updatePost(Post post, {CancelToken? cancelToken}) => _run<void>(
-    request: () => dio.put(
-      'https://jsonplaceholder.typicode.com/posts/${post.id}',
-      data: post.toJson(),
-      cancelToken: cancelToken,
-    ),
-    parse: (data) {},
-  );
+        request: () => dio.put(
+          'https://jsonplaceholder.typicode.com/posts/${post.id}',
+          data: post.toJson(),
+          cancelToken: cancelToken,
+        ),
+        parse: (data) {},
+      );
+
+  Future<void> deletePost(int postId, {CancelToken? cancelToken}) async {
+    await _run<void>(
+      request: () => dio.delete(
+        'https://jsonplaceholder.typicode.com/posts/$postId',
+        cancelToken: cancelToken,
+      ),
+      parse: (data) {},
+    );
+  }
 
   // Generic method to make a request and parse the response data
   Future<T> _run<T>({
