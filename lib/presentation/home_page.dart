@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: const Color(0xFFE300FF),
+        backgroundColor: Colors.deepPurple.shade500,
       ),
       body: const Padding(
         padding: EdgeInsets.only(top: 8),
