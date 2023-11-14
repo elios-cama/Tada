@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tada/presentation/widgets/post_tiles.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,10 +13,53 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Fake Api"),
+        centerTitle: true,
+        title: const Text(
+          "TA-DA TEST",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: const Color(0xFFE300FF),
       ),
-      body: const Center(
-        child: Text("Page d'accueil"),
+      body: const SingleChildScrollView(
+        child: Column(
+          children: [
+            PostTile(
+              name: "Jean",
+              title: "Title test",
+            ),
+            PostTile(
+              name: "Jean",
+              title: "Title test",
+            ),
+            PostTile(
+              name: "Jean",
+              title: "Title test",
+            ),
+            PostTile(
+              name: "Jean",
+              title: "Title test",
+            ),
+            PostTile(
+              name: "Jean",
+              title: "Title test",
+            ),
+            PostTile(
+              name: "Jean",
+              title: "Title test",
+            ),
+            PostTile(
+              name: "Jean",
+              title: "Title test",
+            ),
+            PostTile(
+              name: "Jean",
+              title: "Title test",
+            ),
+          ],
+        ),
       ),
     );
   }
