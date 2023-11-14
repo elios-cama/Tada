@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/posts_repository.dart';
+import '../../data/users_repository.dart';
 
 class PostDetailsPage extends ConsumerWidget {
   const PostDetailsPage({super.key, required this.postId});
@@ -11,6 +12,7 @@ class PostDetailsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final postAsync = ref.watch(fetchPostProvider(postId));
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -47,16 +49,7 @@ class PostDetailsPage extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                Text(
-                  "User : ${post.userId}",
-                  // Replace with actual logic to get userId
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
+                UserNameWidget(post.userId),
                 const SizedBox(height: 32),
                 Text(
                   post.title,
@@ -99,5 +92,36 @@ class PostDetailsPage extends ConsumerWidget {
         ),
       ),
     );
+  }
+}
+
+class UserNameWidget extends ConsumerWidget {
+  const UserNameWidget(
+    this.userId, {
+    super.key,
+  });
+
+  final int userId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final userAsync = ref.watch(fetchUserProvider(userId));
+    return userAsync.when(
+        data: (user) => Text(
+              "User : ${user.name}",
+              // Replace with actual logic to get userId
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+              textAlign: TextAlign.center,
+            ),
+        error: (e, st) => Center(
+              child: Text(
+                e.toString(),
+              ),
+            ),
+        loading: () => const Text("John Doe"));
   }
 }
