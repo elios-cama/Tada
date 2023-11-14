@@ -6,12 +6,11 @@ part 'post.g.dart';
 @freezed
 class Post with _$Post {
   factory Post({
+    required int userId,
     required int id,
-    @JsonKey(name: 'title') String? title,
-    @JsonKey(name: 'body') String? body,
-    // 7. assign it with the `_Review` class constructor
+    required String title,
+    required String body,
   }) = _Post;
 
-  // 8. define another factory constructor to parse from json
   factory Post.fromJson(Map<String, dynamic> json) => _$PostFromJson(json);
 }

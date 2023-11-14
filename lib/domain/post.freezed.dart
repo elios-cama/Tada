@@ -20,11 +20,10 @@ Post _$PostFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Post {
+  int get userId => throw _privateConstructorUsedError;
   int get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'title')
-  String? get title => throw _privateConstructorUsedError;
-  @JsonKey(name: 'body')
-  String? get body => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+  String get body => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,10 +35,7 @@ abstract class $PostCopyWith<$Res> {
   factory $PostCopyWith(Post value, $Res Function(Post) then) =
       _$PostCopyWithImpl<$Res, Post>;
   @useResult
-  $Res call(
-      {int id,
-      @JsonKey(name: 'title') String? title,
-      @JsonKey(name: 'body') String? body});
+  $Res call({int userId, int id, String title, String body});
 }
 
 /// @nodoc
@@ -55,23 +51,28 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? userId = null,
     Object? id = null,
-    Object? title = freezed,
-    Object? body = freezed,
+    Object? title = null,
+    Object? body = null,
   }) {
     return _then(_value.copyWith(
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      title: freezed == title
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String?,
-      body: freezed == body
+              as String,
+      body: null == body
           ? _value.body
           : body // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ) as $Val);
   }
 }
@@ -83,10 +84,7 @@ abstract class _$$PostImplCopyWith<$Res> implements $PostCopyWith<$Res> {
       __$$PostImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {int id,
-      @JsonKey(name: 'title') String? title,
-      @JsonKey(name: 'body') String? body});
+  $Res call({int userId, int id, String title, String body});
 }
 
 /// @nodoc
@@ -99,23 +97,28 @@ class __$$PostImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? userId = null,
     Object? id = null,
-    Object? title = freezed,
-    Object? body = freezed,
+    Object? title = null,
+    Object? body = null,
   }) {
     return _then(_$PostImpl(
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      title: freezed == title
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String?,
-      body: freezed == body
+              as String,
+      body: null == body
           ? _value.body
           : body // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 }
@@ -124,25 +127,26 @@ class __$$PostImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PostImpl implements _Post {
   _$PostImpl(
-      {required this.id,
-      @JsonKey(name: 'title') this.title,
-      @JsonKey(name: 'body') this.body});
+      {required this.userId,
+      required this.id,
+      required this.title,
+      required this.body});
 
   factory _$PostImpl.fromJson(Map<String, dynamic> json) =>
       _$$PostImplFromJson(json);
 
   @override
+  final int userId;
+  @override
   final int id;
   @override
-  @JsonKey(name: 'title')
-  final String? title;
+  final String title;
   @override
-  @JsonKey(name: 'body')
-  final String? body;
+  final String body;
 
   @override
   String toString() {
-    return 'Post(id: $id, title: $title, body: $body)';
+    return 'Post(userId: $userId, id: $id, title: $title, body: $body)';
   }
 
   @override
@@ -150,6 +154,7 @@ class _$PostImpl implements _Post {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PostImpl &&
+            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.body, body) || other.body == body));
@@ -157,7 +162,7 @@ class _$PostImpl implements _Post {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, body);
+  int get hashCode => Object.hash(runtimeType, userId, id, title, body);
 
   @JsonKey(ignore: true)
   @override
@@ -175,20 +180,21 @@ class _$PostImpl implements _Post {
 
 abstract class _Post implements Post {
   factory _Post(
-      {required final int id,
-      @JsonKey(name: 'title') final String? title,
-      @JsonKey(name: 'body') final String? body}) = _$PostImpl;
+      {required final int userId,
+      required final int id,
+      required final String title,
+      required final String body}) = _$PostImpl;
 
   factory _Post.fromJson(Map<String, dynamic> json) = _$PostImpl.fromJson;
 
   @override
+  int get userId;
+  @override
   int get id;
   @override
-  @JsonKey(name: 'title')
-  String? get title;
+  String get title;
   @override
-  @JsonKey(name: 'body')
-  String? get body;
+  String get body;
   @override
   @JsonKey(ignore: true)
   _$$PostImplCopyWith<_$PostImpl> get copyWith =>
