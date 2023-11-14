@@ -6,7 +6,36 @@ part of 'posts_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-// ignore_for_file: avoid_private_typedef_functions, non_constant_identifier_names, subtype_of_sealed_class, invalid_use_of_internal_member, unused_element, constant_identifier_names, unnecessary_raw_strings, library_private_types_in_public_api
+String _$postsRepositoryHash() => r'093d4416ecc27591c9ecf0829dc5699a2c892db5';
+
+/// See also [postsRepository].
+@ProviderFor(postsRepository)
+final postsRepositoryProvider = Provider<PostsRepository>.internal(
+  postsRepository,
+  name: r'postsRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$postsRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef PostsRepositoryRef = ProviderRef<PostsRepository>;
+String _$fetchPostsHash() => r'0a591967398542511cb5415372d3623f1415fbb8';
+
+/// See also [fetchPosts].
+@ProviderFor(fetchPosts)
+final fetchPostsProvider = AutoDisposeFutureProvider<List<Post>>.internal(
+  fetchPosts,
+  name: r'fetchPostsProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$fetchPostsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef FetchPostsRef = AutoDisposeFutureProviderRef<List<Post>>;
+String _$fetchPostHash() => r'c06ffce18752bb102eee293a1afbe3b6410d675e';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,47 +58,103 @@ class _SystemHash {
   }
 }
 
-String $postsRepositoryHash() => r'093d4416ecc27591c9ecf0829dc5699a2c892db5';
+/// See also [fetchPost].
+@ProviderFor(fetchPost)
+const fetchPostProvider = FetchPostFamily();
 
-/// See also [postsRepository].
-final postsRepositoryProvider = Provider<PostsRepository>(
-  postsRepository,
-  name: r'postsRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : $postsRepositoryHash,
-);
-typedef PostsRepositoryRef = ProviderRef<PostsRepository>;
-String $fetchPostsHash() => r'0a591967398542511cb5415372d3623f1415fbb8';
+/// See also [fetchPost].
+class FetchPostFamily extends Family<AsyncValue<Post>> {
+  /// See also [fetchPost].
+  const FetchPostFamily();
 
-/// See also [fetchPosts].
-final fetchPostsProvider = AutoDisposeFutureProvider<List<Post>>(
-  fetchPosts,
-  name: r'fetchPostsProvider',
-  debugGetCreateSourceHash:
-  const bool.fromEnvironment('dart.vm.product') ? null : $fetchPostsHash,
-);
-typedef FetchPostsRef = AutoDisposeFutureProviderRef<List<Post>>;
-String $fetchPostHash() => r'1461029093d7d02f08ab35c21511b9ca7150663d';
+  /// See also [fetchPost].
+  FetchPostProvider call(
+    int postId,
+  ) {
+    return FetchPostProvider(
+      postId,
+    );
+  }
+
+  @override
+  FetchPostProvider getProviderOverride(
+    covariant FetchPostProvider provider,
+  ) {
+    return call(
+      provider.postId,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'fetchPostProvider';
+}
 
 /// See also [fetchPost].
 class FetchPostProvider extends AutoDisposeFutureProvider<Post> {
+  /// See also [fetchPost].
   FetchPostProvider(
-      this.postId,
-      ) : super(
-        (ref) => fetchPost(
-      ref,
-      postId,
-    ),
-    from: fetchPostProvider,
-    name: r'fetchPostProvider',
-    debugGetCreateSourceHash:
-    const bool.fromEnvironment('dart.vm.product')
-        ? null
-        : $fetchPostHash,
-  );
+    int postId,
+  ) : this._internal(
+          (ref) => fetchPost(
+            ref as FetchPostRef,
+            postId,
+          ),
+          from: fetchPostProvider,
+          name: r'fetchPostProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$fetchPostHash,
+          dependencies: FetchPostFamily._dependencies,
+          allTransitiveDependencies: FetchPostFamily._allTransitiveDependencies,
+          postId: postId,
+        );
+
+  FetchPostProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.postId,
+  }) : super.internal();
 
   final int postId;
+
+  @override
+  Override overrideWith(
+    FutureOr<Post> Function(FetchPostRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: FetchPostProvider._internal(
+        (ref) => create(ref as FetchPostRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        postId: postId,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<Post> createElement() {
+    return _FetchPostProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -85,37 +170,17 @@ class FetchPostProvider extends AutoDisposeFutureProvider<Post> {
   }
 }
 
-typedef FetchPostRef = AutoDisposeFutureProviderRef<Post>;
-
-/// See also [fetchPost].
-final fetchPostProvider = FetchPostFamily();
-
-class FetchPostFamily extends Family<AsyncValue<Post>> {
-  FetchPostFamily();
-
-  FetchPostProvider call(
-      int postId,
-      ) {
-    return FetchPostProvider(
-      postId,
-    );
-  }
-
-  @override
-  AutoDisposeFutureProvider<Post> getProviderOverride(
-      covariant FetchPostProvider provider,
-      ) {
-    return call(
-      provider.postId,
-    );
-  }
-
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
-
-  @override
-  List<ProviderOrFamily>? get dependencies => null;
-
-  @override
-  String? get name => r'fetchPostProvider';
+mixin FetchPostRef on AutoDisposeFutureProviderRef<Post> {
+  /// The parameter `postId` of this provider.
+  int get postId;
 }
+
+class _FetchPostProviderElement extends AutoDisposeFutureProviderElement<Post>
+    with FetchPostRef {
+  _FetchPostProviderElement(super.provider);
+
+  @override
+  int get postId => (origin as FetchPostProvider).postId;
+}
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
