@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../../domain/post.dart';
+
 class PostTile extends StatelessWidget {
   const PostTile({
     super.key,
-    required this.name,
-    required this.title,
+    required this.post,
   });
 
-  final String name;
-  final String title;
+  final Post post;
 
   @override
   Widget build(BuildContext context) {
@@ -25,20 +25,21 @@ class PostTile extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Wrap(
           children: [
             Text(
-              name,
+              post.body,
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(height: 8),
             Text(
-              title,
+              post.title,
               overflow: TextOverflow.ellipsis, // Handle overflow
               maxLines: 2,
               style: const TextStyle(
