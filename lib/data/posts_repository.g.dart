@@ -21,6 +21,20 @@ final postsRepositoryProvider = Provider<PostsRepository>.internal(
 );
 
 typedef PostsRepositoryRef = ProviderRef<PostsRepository>;
+String _$createPostHash() => r'c317ad3e333f5a50075f4c329c28b59c8e9206ef';
+
+/// See also [createPost].
+@ProviderFor(createPost)
+final createPostProvider = AutoDisposeFutureProvider<Post>.internal(
+  createPost,
+  name: r'createPostProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$createPostHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef CreatePostRef = AutoDisposeFutureProviderRef<Post>;
 String _$fetchPostsHash() => r'bfe30dcd7479103806c24579830e254d5975fa75';
 
 /// See also [fetchPosts].

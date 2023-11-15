@@ -6,6 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../application/api_error_handler.dart';
 import '../application/dio_provider.dart';
+import '../application/new_post_provider.dart';
 import '../application/selected_user_provider.dart';
 import '../domain/post.dart';
 
@@ -41,16 +42,6 @@ class PostsRepository {
         parse: (data) => Post.fromJson(data),
       );
 
-  // Note: this method submits the data, but the backend won't actually update it
-  Future<void> updatePost(Post post, {CancelToken? cancelToken}) => _run<void>(
-        request: () => dio.put(
-          'https://jsonplaceholder.typicode.com/posts/${post.id}',
-          data: post.toJson(),
-          cancelToken: cancelToken,
-        ),
-        parse: (data) {},
-      );
-
   Future<void> deletePost(int postId, {CancelToken? cancelToken}) async {
     await _run<void>(
       request: () => dio.delete(
@@ -59,6 +50,26 @@ class PostsRepository {
       ),
       parse: (data) {},
     );
+  }
+
+  Future<Post> createPost(Post post, {CancelToken? cancelToken}) async {
+    /*return _run<Post>(
+      request: () {
+        return dio.post(
+        'https://jsonplaceholder.typicode.com/posts',
+        data: {
+          'title': post.title,
+          'body': post.body,
+          'userId': 1,
+        },
+        cancelToken: cancelToken,
+      );
+      },
+      parse: (data) {
+        return Post.fromJson(data);
+      },
+    );*/
+    return post;
   }
 
   // Generic method to make a request and parse the response data
@@ -87,6 +98,16 @@ class PostsRepository {
 @Riverpod(keepAlive: true)
 PostsRepository postsRepository(PostsRepositoryRef ref) {
   return PostsRepository(dio: ref.watch(dioProvider));
+}
+
+@riverpod
+Future<Post> createPost(CreatePostRef ref) {
+  final cancelToken = CancelToken();
+  final newPost = ref.watch(newPostProvider)!;
+  ref.onDispose(() => cancelToken.cancel());
+  return ref
+      .watch(postsRepositoryProvider)
+      .createPost(newPost, cancelToken: cancelToken);
 }
 
 @riverpod

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tada/presentation/widgets/filter_button.dart';
+import 'package:tada/presentation/widgets/post_form_widget.dart';
 import 'package:tada/presentation/widgets/posts_list.dart';
 
 class HomePage extends StatefulWidget {
@@ -10,6 +11,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  void _showPostForm(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => const Dialog(
+        child: PostForm(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +45,15 @@ class _HomePageState extends State<HomePage> {
               child: PostsList(),
             ),
           ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _showPostForm(context),
+        elevation: 2,
+        shape: const CircleBorder(),
+        child: Icon(
+          Icons.add,
+          color: Colors.deepPurple.shade500,
         ),
       ),
     );
