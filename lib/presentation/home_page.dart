@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tada/presentation/widgets/filter_button.dart';
 import 'package:tada/presentation/widgets/posts_list.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,7 +27,15 @@ class _HomePageState extends State<HomePage> {
       ),
       body: const Padding(
         padding: EdgeInsets.only(top: 8),
-        child: PostsList(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            FilterButton(),
+            Expanded(
+              child: PostsList(),
+            ),
+          ],
+        ),
       ),
     );
   }

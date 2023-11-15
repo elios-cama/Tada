@@ -6,6 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../application/api_error_handler.dart';
 import '../application/dio_provider.dart';
+import '../application/selected_user_provider.dart';
 import '../domain/post.dart';
 
 part 'posts_repository.g.dart';
@@ -15,18 +16,22 @@ class PostsRepository {
 
   final Dio dio;
 
-  Future<List<Post>> fetchPosts({CancelToken? cancelToken}) => _run<List<Post>>(
-        request: () => dio.get(
-          'https://jsonplaceholder.typicode.com/posts',
-          cancelToken: cancelToken,
-        ),
-        parse: (data) {
-          // get the list of results
-          final posts = data as List<dynamic>;
-          // map them to a List<Album>
-          return posts.map((post) => Post.fromJson(post)).toList();
-        },
-      );
+  Future<List<Post>> fetchPosts({int? userId, CancelToken? cancelToken}) async {
+    final url = userId != null
+        ? 'https://jsonplaceholder.typicode.com/posts?userId=$userId'
+        : 'https://jsonplaceholder.typicode.com/posts';
+
+    final response = await dio.get(
+      url,
+      cancelToken: cancelToken,
+    );
+
+    final List<Post> posts = (response.data as List<dynamic>)
+        .map((post) => Post.fromJson(post))
+        .toList();
+
+    return posts;
+  }
 
   Future<Post> fetchPost(int postId, {CancelToken? cancelToken}) => _run<Post>(
         request: () => dio.get(
@@ -86,14 +91,15 @@ PostsRepository postsRepository(PostsRepositoryRef ref) {
 
 @riverpod
 Future<List<Post>> fetchPosts(FetchPostsRef ref) {
-  // An object from package:dio that allows cancelling http requests
   final cancelToken = CancelToken();
-  // When the provider is destroyed, cancel the http request
+
+  final selectedUserId = ref.watch(selectedUserIdProvider);
+
   ref.onDispose(() => cancelToken.cancel());
-  // Fetch our data and pass our `cancelToken` for cancellation to work
+
   return ref
       .watch(postsRepositoryProvider)
-      .fetchPosts(cancelToken: cancelToken);
+      .fetchPosts(userId: selectedUserId, cancelToken: cancelToken);
 }
 
 @riverpod

@@ -21,7 +21,7 @@ final postsRepositoryProvider = Provider<PostsRepository>.internal(
 );
 
 typedef PostsRepositoryRef = ProviderRef<PostsRepository>;
-String _$fetchPostsHash() => r'0a591967398542511cb5415372d3623f1415fbb8';
+String _$fetchPostsHash() => r'bfe30dcd7479103806c24579830e254d5975fa75';
 
 /// See also [fetchPosts].
 @ProviderFor(fetchPosts)
