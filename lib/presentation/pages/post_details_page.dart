@@ -22,10 +22,10 @@ class PostDetailsPage extends ConsumerWidget {
           'Post $postId',
           style: const TextStyle(
             color: Colors.white,
-            fontWeight: FontWeight.bold,
+            fontSize: 20,
           ),
         ),
-        backgroundColor: Colors.deepPurple.shade500,
+        backgroundColor: Colors.black,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

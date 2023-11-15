@@ -11,7 +11,10 @@ class FilterButton extends ConsumerWidget {
     final selectedUserId = ref.watch(selectedUserIdProvider);
 
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(
+        bottom: 8,
+        left: 8,
+      ),
       child: DropdownButton<int?>(
         value: selectedUserId,
         onChanged: (userId) {

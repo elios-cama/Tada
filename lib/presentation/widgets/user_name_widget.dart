@@ -15,11 +15,11 @@ class UserNameWidget extends ConsumerWidget {
     final userAsync = ref.watch(fetchUserProvider(userId));
     return userAsync.when(
         data: (user) => Text(
-              "User : ${user.name}",
+              user.name,
               style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
-                fontSize: 16,
+                fontSize: 20,
               ),
               textAlign: TextAlign.center,
             ),

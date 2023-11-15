@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:tada/data/users_repository.dart';
 
 import '../../data/posts_repository.dart';
@@ -40,9 +41,11 @@ class PostTile extends ConsumerWidget {
       },
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => PostDetailsPage(postId: post.id),
+          Navigator.push(
+            context,
+            PageTransition(
+              type: PageTransitionType.fade,
+              child: PostDetailsPage(postId: post.id),
             ),
           );
         },
