@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:tada/presentation/pages/user_detail_page.dart';
 
 import '../../data/posts_repository.dart';
 import '../widgets/comments_widgets.dart';
@@ -17,6 +19,9 @@ class PostDetailsPage extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
+        iconTheme: const IconThemeData(
+          color: Colors.white, //change your color here
+        ),
         centerTitle: true,
         title: Text(
           'Post $postId',
@@ -41,11 +46,23 @@ class PostDetailsPage extends ConsumerWidget {
                       width: 2,
                     ),
                   ),
-                  child: const FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: CircleAvatar(
-                      radius: 60,
-                      backgroundImage: AssetImage('assets/profile_picture.png'),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.fade,
+                          child: UserDetailsPage(userId: post.userId),
+                        ),
+                      );
+                    },
+                    child: const FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: CircleAvatar(
+                        radius: 60,
+                        backgroundImage:
+                            AssetImage('assets/profile_picture.png'),
+                      ),
                     ),
                   ),
                 ),
@@ -86,6 +103,7 @@ class PostDetailsPage extends ConsumerWidget {
           error: (e, st) => Center(
             child: Text(
               e.toString(),
+              style: const TextStyle(color: Colors.white),
             ),
           ),
         ),

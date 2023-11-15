@@ -35,6 +35,9 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
+        iconTheme: const IconThemeData(
+          color: Colors.white, //change your color here
+        ),
         centerTitle: true,
         title: AnimatedTextKit(
           animatedTexts: [
@@ -49,7 +52,7 @@ class _HomePageState extends State<HomePage> {
               colors: colorizeColors,
             ),
           ],
-          isRepeatingAnimation: true,
+          isRepeatingAnimation: false,
         ),
         backgroundColor: Colors.black,
       ),
