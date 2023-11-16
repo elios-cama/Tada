@@ -53,23 +53,22 @@ class PostsRepository {
   }
 
   Future<Post> createPost(Post post, {CancelToken? cancelToken}) async {
-    /*return _run<Post>(
+    return _run<Post>(
       request: () {
         return dio.post(
-        'https://jsonplaceholder.typicode.com/posts',
-        data: {
-          'title': post.title,
-          'body': post.body,
-          'userId': 1,
-        },
-        cancelToken: cancelToken,
-      );
+          'https://jsonplaceholder.typicode.com/posts',
+          data: {
+            'title': post.title,
+            'body': post.body,
+            'userId': 1,
+          },
+          cancelToken: cancelToken,
+        );
       },
       parse: (data) {
         return Post.fromJson(data);
       },
-    );*/
-    return post;
+    );
   }
 
   // Generic method to make a request and parse the response data
@@ -78,11 +77,11 @@ class PostsRepository {
     required T Function(dynamic) parse,
   }) async {
     try {
-      // add artificial delay to test loading UI
-      //await Future.delayed(const Duration(seconds: 1));
       final response = await request();
       switch (response.statusCode) {
         case 200:
+          return parse(response.data);
+        case 201:
           return parse(response.data);
         case 404:
           throw const APIError.notFound();
